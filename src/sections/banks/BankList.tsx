@@ -8,7 +8,7 @@ import BankCard from './BankCard';
 // types
 import { AccreditedBank } from 'src/graphql/banks';
 
-const rowsPerPage = 15;
+const rowsPerPage = 9;
 
 export default function BankList({ bankList }: { bankList: AccreditedBank[] }) {
     const [page, setPage] = useState<number>(0);

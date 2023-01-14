@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { useTheme } from '@mui/material/styles';
 // components
 import { BankList } from 'src/sections/banks';
 // layouts
@@ -29,6 +30,7 @@ interface AccreditedBanksProps {
 
 export default function AccreditedBanks(props: AccreditedBanksProps) {
     const { revenueDistricts, accreditedBanks } = props
+    const theme = useTheme();
     const [getAccreditedBanks] = useLazyQuery<{ findBanksByDistrict: AccreditedBank[] }>(GET_BANKS_BY_RDO);
     const [district, setDistrict] = useState<number>(29);
     const [bankList, setBankList] = useState<AccreditedBank[]>(accreditedBanks);
@@ -77,6 +79,7 @@ export default function AccreditedBanks(props: AccreditedBanksProps) {
                             initial={{ opacity: 0, x: -100 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 100 }}
+                            transition={{ type: "spring" }}
                         >
                             <BankList bankList={bankList} />
                         </motion.div>

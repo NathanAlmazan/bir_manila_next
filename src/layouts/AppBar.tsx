@@ -70,6 +70,7 @@ export default function AppBar(props: AppBarProps) {
                 <NavButton active>Home</NavButton>
                 <NavButton>Citizen Charter</NavButton>
                 <NavButton>Accredited Banks</NavButton>
+                <NavButton>Offices</NavButton>
                 <NavButton>Zonal Values</NavButton>
             </Stack>
 

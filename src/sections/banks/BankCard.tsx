@@ -43,13 +43,13 @@ export default function BankCard({ bank }: { bank: AccreditedBank }) {
             />
             <CardContent>
                 <List sx={{ width: '100%' }}>
-                    <ListItem>
+                    <ListItem sx={{ px: 0 }}>
                         <ListItemAvatar>
                             <Icon 
                                 icon='ph:bank-bold' 
                                 width={30} 
                                 height={30} 
-                                color={theme.palette.success.main}
+                                color={theme.palette.success.dark}
                             />
                         </ListItemAvatar>
                         <ListItemText 
@@ -66,7 +66,7 @@ export default function BankCard({ bank }: { bank: AccreditedBank }) {
                         />
                     </ListItem>
                     <Divider />
-                    <ListItem>
+                    <ListItem sx={{ px: 0 }}>
                         <ListItemAvatar>
                             <Icon 
                                 icon='material-symbols:location-on' 
