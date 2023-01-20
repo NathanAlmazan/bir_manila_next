@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { GetStaticProps } from 'next';
 // mui
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 // components
 import { OfficeList } from 'src/sections/offices';
 // layouts
 import DefaultLayout from "src/layouts";
-// animation
-import { AnimatePresence, motion } from 'framer-motion';
 // apollo
 import { useLazyQuery } from '@apollo/client';
 import apolloClient from 'src/graphql';
@@ -39,7 +39,7 @@ export default function DistrictOffices(props: DistrictOfficesProps) {
     const { birOffices, revenueDistricts } = props;
     const [getOfficesByRdo] = useLazyQuery<{ findOfficesByDistrict: BirOffice[] }>(GET_OFFICES_BY_RDO);
     const [offices, setOFfices] = useState<BirOffice[]>(birOffices);
-    const [selected, setSelected] = useState<string>('all');
+    const [selected, setSelected] = useState<string | number>('all');
 
     const handleSelectAll = () => {
         setSelected('all');
@@ -52,7 +52,7 @@ export default function DistrictOffices(props: DistrictOfficesProps) {
     }
 
     const handleSelectDistrictOffices = async (district: number) => {
-        setSelected(district.toString());
+        setSelected(district);
 
         const response = await getOfficesByRdo({
             variables: {
@@ -65,6 +65,12 @@ export default function DistrictOffices(props: DistrictOfficesProps) {
         if (offices) setOFfices(offices.findOfficesByDistrict)
     }
 
+    const handleTabsChange = (event: React.SyntheticEvent, newValue: string | number) => {
+        if (newValue === 'all') handleSelectAll();
+        else if (typeof newValue === 'number') handleSelectDistrictOffices(newValue);
+        else if (typeof newValue === 'string') handleSelectMainOffice(newValue);
+    }
+
     return (
         <>
              <DefaultLayout
@@ -73,36 +79,44 @@ export default function DistrictOffices(props: DistrictOfficesProps) {
             >
                 <Container maxWidth='lg'>
 
-                    <Grid container spacing={2} sx={{ py: 2 }}>
-                        <Grid item>
-                            <TagButton 
-                                variant={selected === 'all' ? 'contained' : 'outlined'}
-                                onClick={handleSelectAll}
-                            >
-                                All
-                            </TagButton>
-                        </Grid>
+                    <Tabs
+                        value={selected}
+                        onChange={handleTabsChange}
+                        variant='scrollable'
+                        scrollButtons='auto'
+                    >
+                        <Tab 
+                            value={'all'}
+                            label={
+                                <Typography variant='body1' sx={{ fontWeight: 700 }}>
+                                    All
+                                </Typography>
+                            } 
+                        />
                         {revenueDistricts.map(district => (
-                            <Grid key={district.number} item>
-                                <TagButton 
-                                    variant={selected === `${district.number}` ? 'contained' : 'outlined'}
-                                    onClick={() => handleSelectDistrictOffices(district.number)}
-                                >
-                                    {`RDO ${district.number}`}
-                                </TagButton>
-                            </Grid>
+                            <Tab 
+                                key={district.number}
+                                value={district.number}
+                                label={
+                                    <Typography variant='body1' sx={{ fontWeight: 700 }}>
+                                        {`RDO ${district.number}`}
+                                    </Typography>
+                                } 
+                            />
                         ))}
+
                         {birOffices.map(office => (
-                            <Grid key={office.name} item>
-                                <TagButton 
-                                    variant={selected === office.name ? 'contained' : 'outlined'}
-                                    onClick={() => handleSelectMainOffice(office.name)}
-                                >
-                                    {office.name}
-                                </TagButton>
-                            </Grid>
+                            <Tab 
+                                key={office.name}
+                                value={office.name}
+                                label={
+                                    <Typography variant='body1' sx={{ fontWeight: 700 }}>
+                                        {office.name}
+                                    </Typography>
+                                } 
+                            />
                         ))}
-                    </Grid>
+                    </Tabs>
 
                     <OfficeList officeList={offices} />
                 </Container>

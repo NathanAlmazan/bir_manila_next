@@ -29,3 +29,18 @@ export const GET_BANKS_BY_RDO = gql`
         }
     }
 `
+
+export const SEARCH_BANKS = gql`
+    query BankByAddress($address: String!) {
+        findBanksByAddress(address: $address) {
+            id
+            code
+            branch
+            fullAddress
+            details {
+                fullName
+                logo
+            }
+        }
+    }
+`

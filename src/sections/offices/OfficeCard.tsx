@@ -1,13 +1,12 @@
 // mui
 import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 // animations
 import { motion } from 'framer-motion';
 // icons
@@ -17,18 +16,26 @@ import { BirOffice } from 'src/graphql/offices';
 
 export default function OfficeCard({ office }: { office: BirOffice }) {
     const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
     return (
-        <>
-            <ListItem sx={{ py: 5, pl: 3 }}>
-                <motion.div
-                    key={office.id}
-                    initial={{ opacity: 0, y: 100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ type: "spring" }}
-                >
+        <motion.div
+                key={office.id}
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: "spring" }}
+            >
+            <Card sx={{
+                p: 3,
+                borderLeft: {
+                    xs: 'none',
+                    md: `8px solid ${theme.palette.error.light}`
+                },
+                borderTop: {
+                    xs: `8px solid ${theme.palette.error.light}`,
+                    md: 'none'
+                }
+            }}>
                 <Grid container spacing={4}>
                     <Grid 
                         item 
@@ -98,7 +105,7 @@ export default function OfficeCard({ office }: { office: BirOffice }) {
                         </List>
                     </Grid>
                     <Grid item xs={12} md={8}>
-                       <Grid container spacing={2}>
+                        <Grid container spacing={2}>
                             {office.officers.map(officer => (
                                 <Grid key={officer.name} item xs={12} md={6}>
                                     <List>
@@ -146,13 +153,10 @@ export default function OfficeCard({ office }: { office: BirOffice }) {
                                     </List>
                                 </Grid>
                             ))}
-                       </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
-                </motion.div>
-            </ListItem>
-
-            <Divider />
-        </>
+            </Card>
+        </motion.div>
     )
 }

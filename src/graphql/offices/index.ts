@@ -59,3 +59,25 @@ export const GET_OFFICES_BY_RDO = gql`
         }
     }
 `
+
+export const SEARCH_OFFICES = gql`
+    query SearchBirOffices($office: String!) {
+        searchBirOffices(office: $office) {
+            id
+            name
+            address
+            email
+            district {
+                number
+            }
+            officers {
+                name
+                position
+                contacts {
+                    number
+                    type
+                }
+            }
+        }
+    }
+`

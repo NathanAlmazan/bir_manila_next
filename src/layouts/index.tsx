@@ -1,3 +1,4 @@
+import { useState } from 'react';
 // next
 import Link from 'next/link';
 // mui
@@ -9,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 // components
 import footerPages from './constants';
+import MobileDrawer from './MobileDrawer';
 import AppBar, { Logo } from './AppBar';
 // icons
 import { Icon } from '@iconify/react';
@@ -40,6 +42,7 @@ const Footer = styled('footer')(({ theme }) => ({
 interface DefaultLayoutProps {
     children?: React.ReactNode,
     title: string,
+    search?: boolean,
     breadcrumbs: {
         href: string,
         label: string,
@@ -47,33 +50,48 @@ interface DefaultLayoutProps {
 }
 
 export default function DefaultLayout(props: DefaultLayoutProps) {
-    const { title, breadcrumbs } = props;
+    const { title, breadcrumbs, search } = props;
     const theme = useTheme();
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <>
             <Header>
-                <AppBar search />
+                <AppBar 
+                    search 
+                    toggleDrawer={() => setOpen(!open)}
+                />
 
                 <Container maxWidth='lg' sx={{ pt: 5 }}>
-                    <Breadcrumbs sx={{ color: 'white' }}>
-                        {breadcrumbs.map((link, index) => (
-                            <Link 
-                                key={index} 
-                                href={link.href} 
-                                style={{ 
-                                    color: index === breadcrumbs.length - 1 ? theme.palette.primary.light : 'white'
-                                }}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                    </Breadcrumbs>
+                    {search ? (
+                        <Typography variant='h6' color='white' fontWeight={800}>
+                            Results for...
+                        </Typography>
+                    ) : (
+                        <Breadcrumbs sx={{ color: 'white' }}>
+                            {breadcrumbs.map((link, index) => (
+                                <Link 
+                                    key={index} 
+                                    href={link.href} 
+                                    style={{ 
+                                        color: index === breadcrumbs.length - 1 ? theme.palette.primary.light : 'white'
+                                    }}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </Breadcrumbs>
+                    )}
                     <Typography variant='h2' color='white' paddingBottom={2}>
-                        {title}
+                        {search ? `"${title}"` : title}
                     </Typography>
                 </Container>
             </Header>
+
+            <MobileDrawer 
+                open={open}
+                handleToggle={() => setOpen(!open)}
+            />
 
             {props.children}
 
