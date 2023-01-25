@@ -44,3 +44,16 @@ export const SEARCH_BANKS = gql`
         }
     }
 `
+
+
+export const SEARCH_BANKS_BY_NAME_AND_BRANCH = gql`
+    query BankByNameAndBranch($branchAndName: String!) {
+        findBanksByAddress(address: $branchAndName) {
+
+            branch
+            details {
+                fullName
+            }
+        }
+    }
+`

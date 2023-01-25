@@ -84,6 +84,10 @@ export default function HeroSection() {
 
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value);
+
+        handleBranchAndNameSearch(event.target.value);
+        handleCharterTitleSearch(event.target.value);
+        handleOfficeNameSearch(event.target.value);
     }
 
     const handleSubmitSearch = (event: React.FormEvent<HTMLFormElement>) => {
@@ -96,6 +100,52 @@ export default function HeroSection() {
             pathname: '/search'
         })
     }
+
+    const handleBranchAndNameSearch = async (search: string) => { 
+
+        const searchResult = await getBankNameAndBranch({
+
+            variables: {
+
+                branchAndName: search
+
+            }
+
+        })
+
+        console.log(searchResult.data?.findBanksByAddress)
+    }
+
+    const handleCharterTitleSearch = async (search: string) => { 
+
+        const searchResult = await getCharterTitle({
+
+            variables: {
+
+                charterTitle: search
+
+            }
+
+        })
+
+        console.log(searchResult.data?.searchCharter)
+    }
+
+    const handleOfficeNameSearch = async (search: string) => { 
+
+        const searchResult = await getOfficeName({
+
+            variables: {
+
+                officeName: search
+
+            }
+
+        })
+
+        console.log(searchResult.data?.findAllOffices)
+    }
+
 
     return (
         <HeroBackground>
