@@ -129,3 +129,11 @@ export const SEARCH_CHARTER = gql`
         }
     }
 `
+
+export const SEARCH_CHARTER_BY_TITLE = gql`
+    query charterByTitle($charterTitle: String!) {
+        searchCharter(search: $charterTitle) {
+            title
+        }
+    }
+`

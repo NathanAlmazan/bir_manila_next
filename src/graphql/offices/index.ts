@@ -81,3 +81,11 @@ export const SEARCH_OFFICES = gql`
         }
     }
 `
+
+export const SEARCH_OFFICE_BY_NAME = gql`
+    query officeByName($officeName: String!) {
+        findAllOffices(name: $officeName) {
+            name
+        }
+    }
+`
