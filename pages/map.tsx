@@ -86,7 +86,7 @@ export default function ZonalMap() {
 
                     <Box 
                         component="iframe"
-                        src={`https://rrmanila.000webhostapp.com/maps/leaflet.php?x=${coordinates[district as keyof typeof coordinates].x}&y=${coordinates[district as keyof typeof coordinates].y}&z=${coordinates[district as keyof typeof coordinates].z}`}
+                        src={`http://birmap.nat911.com/leaflet.php?x=${coordinates[district as keyof typeof coordinates].x}&y=${coordinates[district as keyof typeof coordinates].y}&z=${coordinates[district as keyof typeof coordinates].z}`}
                         sx={{ width: '100%', height: 800 }}
                     />
                 </Container>
