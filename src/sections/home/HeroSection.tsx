@@ -15,6 +15,9 @@ import AppBar from 'src/layouts/AppBar';
 import MobileDrawer from 'src/layouts/MobileDrawer';
 // icons
 import SearchIcon from '@mui/icons-material/Search';
+// apollo
+import { useLazyQuery } from '@apollo/client';
+import { AccreditedBank, SEARCH_BANKS } from 'src/graphql/banks';
 
 const HeroBackground = styled('section')(() => ({
     backgroundImage: 'url("/covers/bir-manila.jpg")',
@@ -80,10 +83,12 @@ const paths = [
 export default function HeroSection() {
     const [open, setOpen] = useState<boolean>(false);
     const [search, setSearch] = useState<string>('');
+    const [getAccreditedBanks] = useLazyQuery<{ findBanksByAddress: AccreditedBank[] }>(SEARCH_BANKS);
     const router = useRouter();
 
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value);
+        handleSearch(event.target.value);
     }
 
     const handleSubmitSearch = (event: React.FormEvent<HTMLFormElement>) => {
@@ -95,6 +100,17 @@ export default function HeroSection() {
             },
             pathname: '/search'
         })
+    }
+
+
+    const handleSearch = async (search: string) => {
+        const result = await getAccreditedBanks({
+            variables: {
+                address: search
+            }
+        })
+
+        console.log(result.data?.findBanksByAddress)
     }
 
     return (

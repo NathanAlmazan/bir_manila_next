@@ -69,6 +69,11 @@ export const paths = [
         href: '/zonal',
         label: 'Zonal Values',
         icon: <Icon icon='material-symbols:map-rounded' width={30} height={30} />
+    },
+    {
+        href: '/map',
+        label: 'Zonal Map',
+        icon: <Icon icon='material-symbols:map-rounded' width={30} height={30} />
     }
 ]
 
