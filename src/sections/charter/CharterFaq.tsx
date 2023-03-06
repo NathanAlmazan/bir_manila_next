@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 // mui
 import Stack from '@mui/material/Stack';
 import Accordion from '@mui/material/Accordion';
@@ -20,6 +21,8 @@ export default function CharterFaq(props: {
 }) {
     const { charter, handleTabsChange } = props;
     const [expand, setExpand] = useState<string>(charter.description.length === 0 ? "panel2" : "panel1");
+
+    const router = useRouter();
 
     return (
         <Stack spacing={2} sx={{ pt: 5, pb: 8 }}>
@@ -78,7 +81,7 @@ export default function CharterFaq(props: {
                         {charter.location}
                     </Typography>
                     <Stack direction='row' justifyContent="flex-end" sx={{ pt: 3 }}>
-                        <Button variant='contained'>
+                        <Button variant='contained' onClick={() => router.push("/offices")}>
                             See Revenue Region Offices
                         </Button>
                     </Stack>
@@ -136,8 +139,15 @@ export default function CharterFaq(props: {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography variant='body1'>
-                        {!charter.fee || charter.fee.length === 0 ? "No application fee" : charter.fee}
+                        {!charter.fee || charter.fee.length === 0 || charter.fee === "None" ? "No application fee" : charter.fee}
                     </Typography>
+                    {charter.fee && charter.fee !== "None" && charter.fee?.length > 0 && (
+                        <Stack direction='row' justifyContent="flex-end" sx={{ pt: 3 }}>
+                            <Button variant='contained' onClick={() => router.push("/banks")}>
+                                See Accredited Banks
+                            </Button>
+                        </Stack>
+                    )}
                 </AccordionDetails>
             </Accordion>
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 // mui
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -30,6 +31,8 @@ export default function CharterProcessStepper(props: { process: CharterProcess[]
     const handleReset = () => {
         setStep(0);
     }
+
+    const router = useRouter();
 
     return (
         <Stepper activeStep={step} orientation='vertical' sx={{ pt: 3, pb: 5, maxWidth: 700 }}>
@@ -112,6 +115,11 @@ export default function CharterProcessStepper(props: { process: CharterProcess[]
                         </Box>
                         <Box sx={{ mb: 2 }}>
                             <div>
+                                {p.fee && p.fee !== "None" && p.fee?.length > 0 && (
+                                    <Button variant='contained' color="info" onClick={() => router.push("/banks")} sx={{ mt: 1, mr: 1 }}>
+                                        Accredited Banks
+                                    </Button>
+                                )}
                                 <Button
                                     variant="contained"
                                     onClick={index === props.process.length - 1 ? handleReset : handleNext}
