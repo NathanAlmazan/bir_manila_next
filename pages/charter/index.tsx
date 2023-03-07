@@ -12,6 +12,7 @@ import { CharterList } from 'src/sections/charter';
 // animation
 import { AnimatePresence, motion } from 'framer-motion';
 // apollo
+import { useLazyQuery } from '@apollo/client';
 import apolloClient from 'src/graphql';
 import { 
     GET_ALL_CATEGORIES, 
@@ -33,9 +34,20 @@ interface CitizenCharterProps {
 export default function CitizenCharterPage(props: CitizenCharterProps) {
     const { categories, charters } = props;
     const [selected, setSelected] = useState<string>("1");
+    const [charterList, setCharterList] = useState<CitizenCharter[]>(charters);
 
-    const handleTabsChange = (event: React.SyntheticEvent, newValue: string) => {
+    const [getChartersByCategory] = useLazyQuery<{ findChartersByCategory: CitizenCharter[] }>(GET_CHARTER_BY_CATEGORY);
+
+    const handleTabsChange = async (event: React.SyntheticEvent, newValue: string) => {
         setSelected(newValue);
+
+        const response = await getChartersByCategory({ variables: {
+            category: parseInt(newValue)
+        }})
+
+        const banks = response.data
+
+        if (banks) setCharterList(banks.findChartersByCategory);
     }
 
     return (
@@ -71,7 +83,7 @@ export default function CitizenCharterPage(props: CitizenCharterProps) {
                             exit={{ opacity: 0, x: 100 }}
                             transition={{ type: "spring" }}
                         >
-                            <CharterList charterList={charters} />
+                            <CharterList charterList={charterList} />
                         </motion.div>
                     </AnimatePresence>
                 </Container>
