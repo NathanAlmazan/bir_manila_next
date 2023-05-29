@@ -27,11 +27,14 @@ interface ZonalValuePageProps {
     zones: Zone[]
 }
 
-function filterZonalValues(zones: Zone[], barangay: string) {
+function filterZonalValues(zones: Zone[], barangay: string, category: string) {
     let values: ZonalValue[] = [];
 
     zones.forEach(z => {
-        values = values.concat(z.values.filter(o => o.barangay === barangay))
+        values = values.concat(z.values.filter(o => 
+            (o.classification.name === category || category === 'none') && 
+            (o.barangay === barangay || barangay === 'none')
+        ))
     })
 
     return values;
@@ -43,7 +46,8 @@ export default function ZonalValuePage(props: ZonalValuePageProps) {
     const [district, setDistrict] = useState<number>(29);
     const [valueList, setValueList] = useState<Zone[]>(zones);
     const [selectedZone, setSelectedZone] = useState<number>(zones[0].number)
-    const [selectedBarangay, setSelectedBarangay] = useState<string>(zones[0].values[0].barangay)
+    const [selectedBarangay, setSelectedBarangay] = useState<string>('none')
+    const [selectedCategory, setSelectedCategory] = useState<string>('none');
 
     const handleTabsChange = async (event: React.SyntheticEvent, newValue: number) => {
         setDistrict(newValue);
@@ -57,7 +61,7 @@ export default function ZonalValuePage(props: ZonalValuePageProps) {
         if (zoneList) {
             setValueList(zoneList.findZonesByDistrict);
             setSelectedZone(zoneList.findZonesByDistrict[0].number);
-            setSelectedBarangay(zoneList.findZonesByDistrict[0].values[0].barangay);
+            setSelectedBarangay('none');
         }
     }
 
@@ -69,6 +73,10 @@ export default function ZonalValuePage(props: ZonalValuePageProps) {
         setSelectedZone(zone);
         const selected = valueList.find(v => v.number === zone);
         if (selected) setSelectedBarangay(selected.values.map(v => v.barangay)[0]);
+    }
+
+    const handleSelectCategory = (category: string) => {
+        setSelectedCategory(category);
     }
 
     return (
@@ -101,8 +109,10 @@ export default function ZonalValuePage(props: ZonalValuePageProps) {
                         zones={valueList} 
                         selectedZone={selectedZone}
                         selectedBarangay={selectedBarangay}
+                        selectedCategory={selectedCategory}
                         handleSelectBarangay={handleSelectBarangay}
                         handleSelectZone={handleSelectZone}
+                        handleSelectCategory={handleSelectCategory}
                     />
 
                     <AnimatePresence mode='wait'>
@@ -113,7 +123,7 @@ export default function ZonalValuePage(props: ZonalValuePageProps) {
                             exit={{ opacity: 0, x: 100 }}
                             transition={{ type: "spring" }}
                         >
-                           <ZoneValueList zoneList={filterZonalValues(valueList.filter(v => v.number === selectedZone), selectedBarangay)} />
+                           <ZoneValueList zoneList={filterZonalValues(valueList.filter(v => v.number === selectedZone), selectedBarangay, selectedCategory)} />
                         </motion.div>
                     </AnimatePresence>
                 </Container>
