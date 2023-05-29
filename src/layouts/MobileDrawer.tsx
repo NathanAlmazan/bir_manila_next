@@ -17,7 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 const DrawerBackground = styled('section')(() => ({
-    backgroundImage: 'url("/covers/bir-manila.jpg")',
+    backgroundImage: 'url("https://res.cloudinary.com/ddpqji6uq/image/upload/v1685396575/bir_cover_xn4ng0.jpg")',
     backgroundSize: 'cover',
     height: '100%',
     position: 'relative',
@@ -104,7 +104,7 @@ export default function MobileDrawer({ open, handleToggle }: {
                 >
                     <Logo 
                         alt='br-logo'
-                        src="/icons/bir-logo.png"
+                        src="https://res.cloudinary.com/ddpqji6uq/image/upload/v1684463093/banks/bir-logo_tdnw9n.png"
                     />
 
                     <Typography variant='h3' sx={{ fontWeight: 800, color: 'white', py: 2 }}>

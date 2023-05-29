@@ -135,7 +135,7 @@ export default function AppBar(props: AppBarProps) {
             >
                 <Logo 
                     alt='br-logo'
-                    src="/icons/bir-logo.png"
+                    src="https://res.cloudinary.com/ddpqji6uq/image/upload/v1684463093/banks/bir-logo_tdnw9n.png"
                 />
                 {paths.map(path => (
                     <NavButton 

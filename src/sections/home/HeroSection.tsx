@@ -20,7 +20,7 @@ import { useLazyQuery } from '@apollo/client';
 import { AccreditedBank, SEARCH_BANKS } from 'src/graphql/banks';
 
 const HeroBackground = styled('section')(() => ({
-    backgroundImage: 'url("/covers/bir-manila.jpg")',
+    backgroundImage: 'url("https://res.cloudinary.com/ddpqji6uq/image/upload/v1685396575/bir_cover_xn4ng0.jpg")',
     backgroundSize: 'cover',
     height: '100vh',
     position: 'relative',

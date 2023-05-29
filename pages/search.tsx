@@ -168,7 +168,7 @@ export default function SearchPage(props: SearchPageProps) {
                                 <Box 
                                     component="img"
                                     alt="no-result"
-                                    src="/covers/no-results.png"
+                                    src="https://res.cloudinary.com/ddpqji6uq/image/upload/v1684463078/banks/no-results_pfl82l.png"
                                 />
                                 <Typography variant="h3" align="center" sx={{ fontWeight: 700 }}>Sorry, no results found.</Typography>
                             </Container>

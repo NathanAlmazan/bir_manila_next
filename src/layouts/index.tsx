@@ -16,7 +16,7 @@ import AppBar, { Logo } from './AppBar';
 import { Icon } from '@iconify/react';
 
 const Header = styled('section')(() => ({
-    backgroundImage: 'url("/covers/bir-manila.jpg")',
+    backgroundImage: 'url("https://res.cloudinary.com/ddpqji6uq/image/upload/v1685396575/bir_cover_xn4ng0.jpg")',
     backgroundSize: 'cover',
     minHeight: 250,
     position: 'relative',
@@ -101,7 +101,7 @@ export default function DefaultLayout(props: DefaultLayoutProps) {
                         <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Logo 
                                 alt='br-logo'
-                                src="/icons/bir-logo.png"
+                                src="https://res.cloudinary.com/ddpqji6uq/image/upload/v1684463093/banks/bir-logo_tdnw9n.png"
                             />
 
                             <Typography variant='h6' sx={{ fontWeight: 600, color: 'white', py: 2 }}>
